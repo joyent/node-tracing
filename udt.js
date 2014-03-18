@@ -24,7 +24,22 @@ var util = require('util');
 var EventEmitter = require('events');
 var PlatformProvider, platformProvider, dtraceProbe;
 
-var PROBE_ARGUMENT_MAP = process.binding('dtrace').constants;
+try {
+  var PROBE_ARGUMENT_MAP = process.binding('dtrace').constants;
+} catch(e) {
+  var PROBE_ARGUMENT_MAP = {
+    STRING: 1,
+    JSON: 2,
+    INT64: 3,
+    UINT32: 4,
+    INT32: 5,
+    UINT16: 6,
+    INT16: 7,
+    UINT8: 8,
+    INT8: 9
+  } 
+}
+
 PROBE_ARGUMENT_MAP['CHAR *'] = PROBE_ARGUMENT_MAP.STRING;
 
 for (var argname in PROBE_ARGUMENT_MAP) {
@@ -323,9 +338,13 @@ function _makeProviderOptions(options) {
 exports.createProvider = function(options) {
   if (!PlatformProvider) {
     if (process.config.variables.node_use_dtrace) {
-      platformProvider = process.binding('dtrace_provider').DTraceProvider;
-      dtraceProbe = process.binding('dtrace_provider').DTraceProbe;
-      PlatformProvider = DTraceProvider;
+      try {
+        platformProvider = process.binding('dtrace_provider').DTraceProvider;
+        dtraceProbe = process.binding('dtrace_provider').DTraceProbe;
+        PlatformProvider = DTraceProvider;
+      } catch(e) {
+        PlatformProvider = Provider;
+      }
     } else {
       PlatformProvider = Provider;
     }
