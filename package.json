@@ -1,0 +1,29 @@
+{
+  "name": "tracing",
+  "version": "0.0.0",
+  "description": "User defined tracing",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "python tools/test.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joyent/node-tracing.git"
+  },
+  "keywords": [
+    "tracing",
+    "dtrace",
+    "async-listener",
+    "asynclistener",
+    "etw"
+  ],
+  "author": "Node Core <core@nodejs.org>",
+  "license": "MIT/X11",
+  "bugs": {
+    "url": "https://github.com/joyent/node-tracing/issues"
+  },
+  "homepage": "https://github.com/joyent/node-tracing"
+}
