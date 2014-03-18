@@ -22,7 +22,7 @@
 var common = require('../common');
 var assert = require('assert');
 
-var tracing = require('tracing');
+var tracing = require('../../index.js');
 
 var providerName = 'foobar';
 
