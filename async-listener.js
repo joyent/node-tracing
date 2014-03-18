@@ -467,21 +467,18 @@ var _setTimeout = global.setTimeout;
 var _setInterval = global.setInterval;
 
 
-function alWrap(cb) {
-  return function alWrapImplementation() {
-    loadAsyncQueue(cb);
-    var ret = cb.apply(this, arguments);
-    unloadAsyncQueue(cb);
-    return ret;
-  }
-}
-
-
 process.nextTick = function nextTick(cb) {
   if (asyncFlags[kActiveAsyncQueueLength] > 0)
     runAsyncQueue(cb, ASYNC_PROVIDERS.NEXTTICK);
 
-  var nextTickWrap = alWrap(cb);
+  var ocb = cb;
+
+  function nextTickWrap() {
+    loadAsyncQueue(ocb);
+    var ret = ocb.apply(this, arguments);
+    unloadAsyncQueue(ocb);
+    return ret;
+  }
   arguments[0] = nextTickWrap;
 
   return _nextTick.apply(this, arguments);
