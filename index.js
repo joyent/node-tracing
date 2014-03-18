@@ -22,3 +22,5 @@
 var util = require('util');
 
 util._extend(exports, require('./udt'));
+util._extend(exports, require('./async-listener'));
+util._extend(exports, require('./v8'));
