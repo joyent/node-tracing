@@ -107,10 +107,6 @@ var PROVIDER_MAP = {};
 for (var i in ASYNC_PROVIDERS)
   PROVIDER_MAP[ASYNC_PROVIDERS[i]] = i;
 
-// _errorHandler is scoped so it's also accessible by _fatalException.
-// This will be removed once a reference there is made.
-exports._errorHandler = errorHandler;
-
 
 // Public API.
 exports.createAsyncListener = createAsyncListener;
